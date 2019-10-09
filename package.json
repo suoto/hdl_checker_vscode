@@ -1,0 +1,99 @@
+{
+	"name": "hdl-checker",
+	"description": "HDL Checker VSCode client",
+	"author": "Suoto",
+	"license": "GPLv3",
+	"version": "1.0.0",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/suoto/hdl_checker_vscode"
+	},
+	"categories": [],
+	"keywords": [
+		"VHDL",
+		"Verilog",
+		"SystemVerilog",
+		"IDE",
+		"ModelSim",
+		"Questa",
+		"Vivado",
+		"ghdl",
+		"Language server"
+	],
+	"engines": {
+		"vscode": "^1.33.0"
+	},
+	"activationEvents": [
+		"onLanguage:vhdl",
+		"onLanguage:verilog",
+		"onLanguage:systemverilog"
+	],
+	"main": "./client/out/extension",
+	"contributes": {
+		"languages": [
+			{
+				"id": "vhdl",
+				"aliases": [
+					"VHDL"
+				],
+				"extensions": [
+					".vhd",
+					".VHD"
+				],
+				"configuration": "./language_defs/vhdl-configuration.json"
+			},
+			{
+				"id": "verilog",
+				"aliases": [
+					"Verilog"
+				],
+				"extensions": [
+					".v",
+					".vh"
+				],
+				"configuration": "./language_defs/verilog-configuration.json"
+			},
+			{
+				"id": "systemverilog",
+				"aliases": [
+					"SystemVerilog"
+				],
+				"extensions": [
+					".sv",
+					".svh"
+				],
+				"configuration": "./language_defs/verilog-configuration.json"
+			}
+		],
+		"grammars": [
+			{
+				"language": "vhdl",
+				"scopeName": "source.vhdl",
+				"path": "./language_defs/vhdl.tmLanguage.json"
+			}
+		],
+		"configuration": {
+			"type": "object",
+			"title": "VHDL",
+			"properties": {
+				"hdlChecker.logFile": {
+					"type": "string",
+					"default": null
+				}
+			}
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "cd client && npm run update-vscode && cd .. && npm run compile",
+		"compile": "tsc -b",
+		"watch": "tsc -b -w",
+		"postinstall": "cd client && npm install && cd ../server && npm install && cd ..",
+		"test": "sh ./scripts/e2e.sh"
+	},
+	"devDependencies": {
+		"@types/mocha": "^5.2.0",
+		"@types/node": "^8.0.0",
+		"tslint": "^5.16.0",
+		"typescript": "^3.5.1"
+	}
+}
