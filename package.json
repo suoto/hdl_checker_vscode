@@ -30,48 +30,6 @@
 	],
 	"main": "./client/out/extension",
 	"contributes": {
-		"languages": [
-			{
-				"id": "vhdl",
-				"aliases": [
-					"VHDL"
-				],
-				"extensions": [
-					".vhd",
-					".VHD"
-				],
-				"configuration": "./language_defs/vhdl-configuration.json"
-			},
-			{
-				"id": "verilog",
-				"aliases": [
-					"Verilog"
-				],
-				"extensions": [
-					".v",
-					".vh"
-				],
-				"configuration": "./language_defs/verilog-configuration.json"
-			},
-			{
-				"id": "systemverilog",
-				"aliases": [
-					"SystemVerilog"
-				],
-				"extensions": [
-					".sv",
-					".svh"
-				],
-				"configuration": "./language_defs/verilog-configuration.json"
-			}
-		],
-		"grammars": [
-			{
-				"language": "vhdl",
-				"scopeName": "source.vhdl",
-				"path": "./language_defs/vhdl.tmLanguage.json"
-			}
-		],
 		"configuration": {
 			"type": "object",
 			"title": "VHDL",
