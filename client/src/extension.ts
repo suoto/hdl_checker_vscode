@@ -14,28 +14,73 @@ import {
 } from "vscode-languageclient";
 
 let client: LanguageClient;
+let compilerPath: string;
+
+// export function workspace.onDidChangeTextEditorOptions: Event<TextEditorOptionsChangeEvent> {
+// }
+workspace.onDidChangeConfiguration(e => logEvent(e));
+// workspace.onWillSaveTextDocument(e => logEvent(e));
+
+function logEvent(event) {
+  if (!client) {
+    console.log("No client, nothing to do");
+    return;
+  }
+
+  let restart = false;
+
+  if (
+    compilerPath != workspace.getConfiguration().get("hdlChecker.compilerPath")
+  ) {
+    restart = true;
+  }
+
+  if (!restart) {
+    return;
+  }
+
+  console.log("Configuratino has changed, we should restart the server");
+}
 
 export function activate(context: ExtensionContext) {
   // The server is implemented in node
   let serverCommand = "hdl_checker";
+  let serverArgs = ["--lsp"];
+
+  compilerPath = workspace.getConfiguration().get("hdlChecker.compilerPath");
+
+  let debugArgs = [];
 
   // The debug options for the server
-  // --inspect=6009: runs the server in Node's Inspector mode so VS Code can attach to the server for debugging
-  let cfgLogFile = workspace.getConfiguration().get("hdlChecker.cfgLogFile");
+  if (context.logPath) {
+    debugArgs = [
+      "--log-stream",
+      context.logPath.toString(),
+      "--log-level",
+      "DEBUG"
+    ];
+  }
 
-  let debugOptions = ["--log-level", "DEBUG"];
+  // Add the configured compiler path if it has been set
+  let serverEnv = process.env;
 
-  if (cfgLogFile) {
-    debugOptions = debugOptions.concat(["--log-stream", cfgLogFile.toString()]);
+  if (compilerPath) {
+    serverEnv.PATH = compilerPath + ":" + serverEnv.PATH;
+    console.log("Adding " + compilerPath + " to the server startup path");
   }
 
   // If the extension is launched in debug mode then the debug server options are used
   // Otherwise the run options are used
   let serverOptions: ServerOptions = {
-    run: { command: serverCommand, args: ["--lsp"] },
+    run: {
+      command: serverCommand,
+      args: serverArgs,
+      options: { env: serverEnv }
+    },
     debug: {
       command: serverCommand,
-      args: ["--lsp"].concat(debugOptions)
+      args: serverArgs.concat(debugArgs),
+      options: { env: serverEnv }
     }
   };
 
@@ -69,5 +114,6 @@ export function deactivate(): Thenable<void> | undefined {
   if (!client) {
     return undefined;
   }
+  console.log("Stopping client");
   return client.stop();
 }

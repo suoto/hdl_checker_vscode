@@ -34,9 +34,10 @@
 			"type": "object",
 			"title": "VHDL",
 			"properties": {
-				"hdlChecker.logFile": {
+				"hdlChecker.compilerPath": {
 					"type": "string",
-					"default": null
+					"default": null,
+					"description": "Path to a compiler executable, which will be added to the Language Server PATH environemnt when starting it. This only needs to be set if your environment's PATH doesn't already include the compiler executable.\n\nHDL Checker will search for vcom + vlog, ghdl and xvhdl (in this order) and use the first one that can be executed without error."
 				}
 			}
 		}
