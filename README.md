@@ -2,11 +2,31 @@
 
 Simple client for [HDL Checker][hdl_checker]
 
+| ![Compilation order on hover](images/report_compilation_sequence.png)                                                                                      |
+| :---:                                                                                                                                                      |
+| HDL Checker can infer the compilation sequence even without a project file. This sequence can also be inspected by hovering over the name of a design unit |
+
+| ![Go to definition](images/report_path_and_library_on_hover.png)                   |
+| :---:                                                                              |
+| Inferred libraries and files can be inspected by hovering over their instantiation |
+
+| ![Go to definition](images/report_definition.png) |
+| :---:                                             |
+| Go to definition                                  |
+
 You'll also need HDL Checker server:
 
 ```sh
-pip install hdl_checker
+pip install hdl-checker --upgrade
 ```
+
+or
+
+```sh
+pip install hdl-checker --upgrade --user
+```
+
+(when using `--user` remember to add `~/.local/bin` to your `PATH` environment variable!)
 
 ## About HDL Checker
 
