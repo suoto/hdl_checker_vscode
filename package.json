@@ -5,7 +5,7 @@
     "author": "Suoto",
     "publisher": "suoto",
     "license": "GPLv3",
-    "version": "1.0.0",
+    "version": "1.0.3",
     "repository": {
         "type": "git",
         "url": "https://github.com/suoto/hdl_checker_vscode"
@@ -34,6 +34,41 @@
     ],
     "main": "./client/out/extension",
     "contributes": {
+        "languages": [
+			{
+				"id": "vhdl",
+				"aliases": [
+					"VHDL",
+					"vhdl"
+				],
+				"extensions": [
+					".vhdl",
+					".vhd"
+				]
+			},
+			{
+				"id": "verilog",
+				"aliases": [
+					"Verilog",
+					"verilog"
+				],
+				"extensions": [
+					".v",
+					".vh"
+				]
+			},
+			{
+				"id": "systemverilog",
+				"aliases": [
+					"SystemVerilog",
+					"systemverilog"
+				],
+				"extensions": [
+					".sv",
+					".svh"
+				]
+			}
+		],
         "configuration": {
             "type": "object",
             "title": "VHDL",
