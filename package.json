@@ -1,97 +1,97 @@
 {
-    "name": "hdl-checker-client",
-    "displayName": "HDL Checker LSP Client",
-    "description": "Client for the HDL Checker language server",
-    "author": "Suoto",
-    "publisher": "suoto",
-    "license": "GPLv3",
-    "version": "1.0.4",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/suoto/hdl_checker_vscode"
-    },
-    "categories": [
-        "Linters"
+  "name": "hdl-checker-client",
+  "displayName": "HDL Checker LSP Client",
+  "description": "Client for the HDL Checker language server",
+  "author": "Suoto",
+  "publisher": "suoto",
+  "license": "GPLv3",
+  "version": "1.1.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/suoto/hdl_checker_vscode"
+  },
+  "categories": [
+    "Linters"
+  ],
+  "keywords": [
+    "VHDL",
+    "Verilog",
+    "SystemVerilog",
+    "IDE",
+    "ModelSim",
+    "Questa",
+    "Vivado",
+    "ghdl",
+    "Language server"
+  ],
+  "engines": {
+    "vscode": "^1.33.0"
+  },
+  "activationEvents": [
+    "onLanguage:vhdl",
+    "onLanguage:verilog",
+    "onLanguage:systemverilog"
+  ],
+  "main": "./client/out/extension",
+  "contributes": {
+    "languages": [
+      {
+        "id": "vhdl",
+        "aliases": [
+          "VHDL",
+          "vhdl"
+        ],
+        "extensions": [
+          ".vhdl",
+          ".vhd"
+        ]
+      },
+      {
+        "id": "verilog",
+        "aliases": [
+          "Verilog",
+          "verilog"
+        ],
+        "extensions": [
+          ".v",
+          ".vh"
+        ]
+      },
+      {
+        "id": "systemverilog",
+        "aliases": [
+          "SystemVerilog",
+          "systemverilog"
+        ],
+        "extensions": [
+          ".sv",
+          ".svh"
+        ]
+      }
     ],
-    "keywords": [
-        "VHDL",
-        "Verilog",
-        "SystemVerilog",
-        "IDE",
-        "ModelSim",
-        "Questa",
-        "Vivado",
-        "ghdl",
-        "Language server"
-    ],
-    "engines": {
-        "vscode": "^1.33.0"
-    },
-    "activationEvents": [
-        "onLanguage:vhdl",
-        "onLanguage:verilog",
-        "onLanguage:systemverilog"
-    ],
-    "main": "./client/out/extension",
-    "contributes": {
-        "languages": [
-			{
-				"id": "vhdl",
-				"aliases": [
-					"VHDL",
-					"vhdl"
-				],
-				"extensions": [
-					".vhdl",
-					".vhd"
-				]
-			},
-			{
-				"id": "verilog",
-				"aliases": [
-					"Verilog",
-					"verilog"
-				],
-				"extensions": [
-					".v",
-					".vh"
-				]
-			},
-			{
-				"id": "systemverilog",
-				"aliases": [
-					"SystemVerilog",
-					"systemverilog"
-				],
-				"extensions": [
-					".sv",
-					".svh"
-				]
-			}
-		],
-        "configuration": {
-            "type": "object",
-            "title": "VHDL",
-            "properties": {
-                "hdlChecker.compilerPath": {
-                    "type": "string",
-                    "default": null,
-                    "description": "Path to a compiler executable, which will be added to the Language Server PATH environemnt when starting it. This only needs to be set if your environment's PATH doesn't already include the compiler executable.\n\nHDL Checker will search for vcom + vlog, ghdl and xvhdl (in this order) and use the first one that can be executed without error."
-                }
-            }
+    "configuration": {
+      "type": "object",
+      "title": "VHDL",
+      "properties": {
+        "hdlChecker.compilerPath": {
+          "type": "string",
+          "default": null,
+          "description": "Path to a compiler executable, which will be added to the Language Server PATH environemnt when starting it. This only needs to be set if your environment's PATH doesn't already include the compiler executable.\n\nHDL Checker will search for vcom + vlog, ghdl and xvhdl (in this order) and use the first one that can be executed without error."
         }
-    },
-    "scripts": {
-        "vscode:prepublish": "cd client && npm run update-vscode && cd .. && npm run compile",
-        "compile": "tsc -b",
-        "watch": "tsc -b -w",
-        "postinstall": "cd client && npm install && cd ..",
-        "test": "sh ./scripts/e2e.sh"
-    },
-    "devDependencies": {
-        "@types/mocha": "^5.2.0",
-        "@types/node": "^8.0.0",
-        "tslint": "^5.16.0",
-        "typescript": "^3.5.1"
+      }
     }
+  },
+  "scripts": {
+    "vscode:prepublish": "cd client && npm run update-vscode && cd .. && npm run compile",
+    "compile": "tsc -b",
+    "watch": "tsc -b -w",
+    "postinstall": "cd client && npm install && cd ..",
+    "test": "sh ./scripts/e2e.sh"
+  },
+  "devDependencies": {
+    "@types/mocha": "^5.2.0",
+    "@types/node": "^8.0.0",
+    "tslint": "^5.16.0",
+    "typescript": "^3.5.1"
+  }
 }
