@@ -1,4 +1,4 @@
-# HDL Checker VC Code client
+# HDL Checker VS Code client
 
 Simple client for [HDL Checker][hdl_checker]
 
