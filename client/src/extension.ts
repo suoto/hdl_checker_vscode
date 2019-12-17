@@ -14,7 +14,7 @@ import {
 } from "vscode-languageclient";
 
 let client: LanguageClient;
-let compilerPath: string;
+let cfgCompilerPath: string;
 
 // export function workspace.onDidChangeTextEditorOptions: Event<TextEditorOptionsChangeEvent> {
 // }
@@ -30,7 +30,7 @@ function logEvent(event) {
   let restart = false;
 
   if (
-    compilerPath != workspace.getConfiguration().get("hdlChecker.compilerPath")
+    cfgCompilerPath != workspace.getConfiguration().get("hdlChecker.compilerPath")
   ) {
     restart = true;
   }
@@ -39,7 +39,7 @@ function logEvent(event) {
     return;
   }
 
-  console.log("Configuratino has changed, we should restart the server");
+  console.log("Configuration has changed, we should restart the server");
 }
 
 export function activate(context: ExtensionContext) {
@@ -47,26 +47,46 @@ export function activate(context: ExtensionContext) {
   let serverCommand = "hdl_checker";
   let serverArgs = ["--lsp"];
 
-  compilerPath = workspace.getConfiguration().get("hdlChecker.compilerPath");
+  cfgCompilerPath = workspace.getConfiguration().get("hdlChecker.compilerPath");
+  let cfgLogPath = workspace.getConfiguration().get("hdlChecker.logPath");
+  let cfgLogLevel = workspace.getConfiguration().get("hdlChecker.logLevel");
 
-  let debugArgs = [];
-
+  let debugRunArgs = [];
+  
   // The debug options for the server
   if (context.logPath) {
-    debugArgs = [
+    debugRunArgs = [
       "--log-stream",
       context.logPath.toString(),
       "--log-level",
       "DEBUG"
     ];
   }
+    
+  let extraRunArgs = [];
+    
+  if (cfgLogPath) {
+    extraRunArgs = [
+      "--log-stream",
+      cfgLogPath.toString(),
+    ];
+  }
+
+  if (cfgLogLevel) {
+    extraRunArgs = extraRunArgs.concat(
+      [
+        "--log-level",
+        cfgLogLevel.toString().toUpperCase()
+      ]
+    );
+  }
 
   // Add the configured compiler path if it has been set
   let serverEnv = process.env;
 
-  if (compilerPath) {
-    serverEnv.PATH = compilerPath + ":" + serverEnv.PATH;
-    console.log("Adding " + compilerPath + " to the server startup path");
+  if (cfgCompilerPath) {
+    serverEnv.PATH = cfgCompilerPath + ":" + serverEnv.PATH;
+    console.log("Adding " + cfgCompilerPath + " to the server startup path");
   }
 
   // If the extension is launched in debug mode then the debug server options are used
@@ -74,15 +94,18 @@ export function activate(context: ExtensionContext) {
   let serverOptions: ServerOptions = {
     run: {
       command: serverCommand,
-      args: serverArgs,
+      args: serverArgs.concat(extraRunArgs),
       options: { env: serverEnv }
     },
     debug: {
       command: serverCommand,
-      args: serverArgs.concat(debugArgs),
+      args: serverArgs.concat(debugRunArgs),
       options: { env: serverEnv }
     }
   };
+
+  console.log("Server options: run: " + serverOptions.run.command + " " + serverOptions.run.args.join(" "));
+  console.log("Server options: debug: " + serverOptions.debug.command + " " + serverOptions.debug.args.join(" "));
 
   // Options to control the language client
   let clientOptions: LanguageClientOptions = {
