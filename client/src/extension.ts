@@ -6,6 +6,7 @@
 import * as path from "path";
 import { workspace, ExtensionContext } from "vscode";
 import vscode = require("vscode");
+import os = require('os');
 
 import {
   LanguageClient,
@@ -85,7 +86,11 @@ export function activate(context: ExtensionContext) {
   let serverEnv = process.env;
 
   if (cfgCompilerPath) {
-    serverEnv.PATH = cfgCompilerPath + ":" + serverEnv.PATH;
+	if ( os.platform() == "win32" ) {
+		serverEnv.PATH = cfgCompilerPath + ";" + serverEnv.PATH;
+	} else {
+		serverEnv.PATH = cfgCompilerPath + ":" + serverEnv.PATH;
+	}
     console.log("Adding " + cfgCompilerPath + " to the server startup path");
   }
 
