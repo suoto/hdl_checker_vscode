@@ -86,11 +86,11 @@ export function activate(context: ExtensionContext) {
   let serverEnv = process.env;
 
   if (cfgCompilerPath) {
-	if ( os.platform() == "win32" ) {
-		serverEnv.PATH = cfgCompilerPath + ";" + serverEnv.PATH;
-	} else {
-		serverEnv.PATH = cfgCompilerPath + ":" + serverEnv.PATH;
-	}
+    if ( os.platform() == "win32" ) {
+      serverEnv.PATH = cfgCompilerPath + ";" + serverEnv.PATH;
+    } else {
+      serverEnv.PATH = cfgCompilerPath + ":" + serverEnv.PATH;
+    }
     console.log("Adding " + cfgCompilerPath + " to the server startup path");
   }
 
