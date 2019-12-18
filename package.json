@@ -5,7 +5,7 @@
   "author": "Suoto",
   "publisher": "suoto",
   "license": "GPLv3",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/suoto/hdl_checker_vscode"
