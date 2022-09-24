@@ -5,14 +5,13 @@
 
 import * as path from "path";
 import { workspace, ExtensionContext } from "vscode";
-import vscode = require("vscode");
 import os = require('os');
 
 import {
   LanguageClient,
   LanguageClientOptions,
   ServerOptions
-} from "vscode-languageclient";
+} from "vscode-languageclient/node";
 
 let client: LanguageClient;
 let cfgCompilerPath: string;
